@@ -1,0 +1,55 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<form method="get">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="search" class="form-control" asp-for="SearchTerm" />
+            &nbsp;
+            <button class="btn btn-primary">
+                Search
+            </button>
+        </div>
+    </div>
+</form>
+
+@if (Model.Forecast.ToList().Count > 0)
+{
+<div style=" padding-top: 50px;" class="row">
+    @foreach (var item in Model.Forecast)
+    {
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <strong>@item.name</strong>
+                </div>
+                <div class="row">
+                    @item.shortForecast
+                </div>
+            </div>
+            <div class="col-md-4">
+                <img src="@item.icon" />
+            </div>
+            <div class="col-md-2">
+                <div class="row">
+
+                </div>
+                <div class="row">
+                    <strong>@item.temperature° @item.temperatureUnit</strong>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    }
+</div>
+}
+else
+{
+    <h4>Result Not Found!</h4>
+}
+
