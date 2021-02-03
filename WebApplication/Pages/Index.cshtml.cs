@@ -14,14 +14,20 @@ namespace WebApplication.Pages
         public IEnumerable<WeatherForecastModel.Period> Forecast { get; set; }
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
+        public bool FirstTime { get; set; }
         public IndexModel(ILogger<IndexModel> logger, IWeatherBLL weatherBLL)
         {
             _logger = logger;
             _weatherBLL = weatherBLL;
         }
         //4600 Silver Hill Rd, Suitland, MD 20746
-        public void OnGet()
+        public void OnGet(string SearchTerm)
         {
+            FirstTime = true;
+            if (string.IsNullOrEmpty(SearchTerm))
+            { 
+                FirstTime = false; 
+            }
             Forecast = new List<WeatherForecastModel.Period>();
             var response = _weatherBLL.GetWeatherDetails(SearchTerm);
             if (response != null)
